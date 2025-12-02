@@ -1,0 +1,9 @@
+CREATE TABLE [dbo].[DEPARTMENT] (
+    [ID]   INT         IDENTITY (1, 1) NOT NULL,
+    [NAME] VARCHAR (2) NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+

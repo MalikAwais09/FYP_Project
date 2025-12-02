@@ -1,0 +1,12 @@
+CREATE TABLE [dbo].[COURSE] (
+    [ID]          INT          IDENTITY (1, 1) NOT NULL,
+    [TITLE]       VARCHAR (50) NOT NULL,
+    [COURSE_CODE] VARCHAR (9)  NOT NULL,
+    [CATEGORY]    VARCHAR (20) NOT NULL,
+    [CREDIT_HRS]  INT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+

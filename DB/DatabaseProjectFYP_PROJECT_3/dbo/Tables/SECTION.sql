@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[SECTION] (
+    [ID]         INT         IDENTITY (1, 1) NOT NULL,
+    [NAME]       VARCHAR (7) NULL,
+    [DEPARTMENT] VARCHAR (2) NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+

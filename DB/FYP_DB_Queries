@@ -1,0 +1,211 @@
+
+
+CREATE TABLE USERS (
+    ID  INT IDENTITY(1,1) PRIMARY KEY,
+    Name  VARCHAR(100)  NOT NULL,
+    Gender VARCHAR(20) NULL,
+    DateOfBirth   DATE              NULL,
+    Qualification  VARCHAR(100)      NULL,
+    Department    VARCHAR(100)      NULL,
+    Email    VARCHAR(150)      NOT NULL UNIQUE,
+    PhoneNumber    VARCHAR(20)       NULL,
+    Password     VARCHAR(255)      NOT NULL,
+    Role    VARCHAR(50)       NOT NULL,
+   
+);
+CREATE TABLE STUDENT(
+ID INT FOREIGN KEY REFERENCES USERS(ID),
+SECTION VARCHAR(100)  NOT NULL,
+SEMESTER INT ,
+CGPA FLOAT
+);
+
+CREATE TABLE TEACHER(
+ID INT FOREIGN KEY REFERENCES USERS(ID),
+DESIGNATION VARCHAR(30)  NOT NULL,
+EXPERIENCE_IN_YEARS INT 
+
+);
+DROP DATABASE FYP_PROJECT_2
+CREATE TABLE COURSE(
+ID  INT IDENTITY(1,1) PRIMARY KEY,
+TITLE VARCHAR(50)  NOT NULL,
+COURSE_CODE VARCHAR(9)  NOT NULL,
+CATEGORY VARCHAR(20) NOT NULL,
+CREDIT_HRS INT NOT NULL
+);
+
+CREATE TABLE ENROLLMENT(
+ID  INT IDENTITY(1,1) PRIMARY KEY,
+S_ID INT FOREIGN KEY REFERENCES USERS(ID) ,
+C_ID INT FOREIGN KEY REFERENCES COURSE(ID) ,
+UNIQUE (S_ID, C_ID) 
+
+);
+
+
+CREATE TABLE ALLOCATION(
+ID  INT IDENTITY(1,1) PRIMARY KEY,
+T_ID INT FOREIGN KEY REFERENCES USERS(ID) ,
+C_ID INT FOREIGN KEY REFERENCES COURSE(ID) ,
+ UNIQUE (T_ID, C_ID) 
+
+);
+
+
+CREATE TABLE EXAM(
+    ID  INT IDENTITY(1,1) PRIMARY KEY,
+    T_ID INT FOREIGN KEY REFERENCES USERS(ID) ,
+    C_ID INT FOREIGN KEY REFERENCES COURSE(ID) ,
+    TITLE VARCHAR(50)  NOT NULL,
+    TOTAL_QUESTIONS INT,
+    E_DATE DATE,
+    START_TIME VARCHAR(10),
+    END_TIME VARCHAR(10),
+    E_TYPE VARCHAR(6),   
+    UNIQUE (ID,T_ID, C_ID)
+  );
+
+
+  CREATE TABLE EXAM_DESC_QUES(
+  ID  INT IDENTITY(1,1) PRIMARY KEY ,
+  E_ID INT FOREIGN KEY REFERENCES EXAM (ID),
+  DESCRIPTION VARCHAR(MAX),
+  MARKS INT 
+  );
+
+  CREATE TABLE EXAM_MCQ(
+  ID  INT IDENTITY(1,1) PRIMARY KEY ,
+  E_ID INT FOREIGN KEY REFERENCES EXAM (ID),
+  DESCRIPTION VARCHAR(MAX),
+  MARKS INT 
+  );
+
+  CREATE TABLE MCQ_OPTION(
+   ID INT IDENTITY(1,1) PRIMARY KEY ,
+   Q_ID  INT FOREIGN KEY REFERENCES EXAM_MCQ(ID),
+   OP1 VARCHAR(20) NOT NULL,
+    OP2 VARCHAR(20) NOT NULL,
+    OP3 VARCHAR(20) NOT NULL,
+    OP4 VARCHAR(20) NOT NULL,
+   CORRECT_OP VARCHAR(20) NOT NULL
+  );
+
+  CREATE TABLE DES_ANS(
+  ID INT IDENTITY(1,1) PRIMARY KEY ,
+  Q_ID INT FOREIGN KEY REFERENCES EXAM_DESC_QUES(ID),
+  ANSWERS VARCHAR(MAX)
+  );
+
+  -- USE DATABASE
+USE FYP_PROJECT;
+
+----------------------------------------------------------
+-- 1. INSERT INTO USERS
+----------------------------------------------------------
+
+INSERT INTO USERS (Name, Gender, DateOfBirth, Qualification, Department, Email, PhoneNumber, Password, Role)
+VALUES
+('Aiman Qadeer', 'Female', '2001-05-14', 'BS Computer Science', 'CS', 'aiman.qadeer@example.com', '03001234567', 'pass123', 'Student'),
+('Ali Raza', 'Male', '1999-08-22', 'BS Software Engineering', 'CS', 'ali.raza@example.com', '03011223344', 'pass123', 'Student'),
+('Fatima Khan', 'Female', '1985-03-10', 'MS Computer Science', 'CS', 'fatima.khan@example.com', '03121234567', 'pass123', 'Teacher'),
+('Muhammad Ahmed', 'Male', '1980-11-05', 'MS Information Tech', 'IT', 'ahmed.m@example.com', '03211223344', 'pass123', 'Teacher');
+
+----------------------------------------------------------
+-- 2. INSERT INTO STUDENT (IDs = first 2 users)
+----------------------------------------------------------
+
+INSERT INTO STUDENT (ID, SECTION, SEMESTER, CGPA)
+VALUES
+(1, 'Section A', 5, 3.45),
+(2, 'Section B', 4, 3.10);
+
+----------------------------------------------------------
+-- 3. INSERT INTO TEACHER (IDs = last 2 users)
+----------------------------------------------------------
+
+INSERT INTO TEACHER (ID, DESIGNATION, EXPERIENCE_IN_YEARS)
+VALUES
+(3, 'Assistant Professor', 5),
+(4, 'Lecturer', 3);
+
+----------------------------------------------------------
+-- 4. INSERT INTO COURSE
+----------------------------------------------------------
+
+INSERT INTO COURSE (TITLE, COURSE_CODE, CATEGORY, CREDIT_HRS)
+VALUES
+('Database Systems', 'CS-301', 'Core', 3),
+('Data Structures', 'CS-201', 'Core', 4),
+('Operating Systems', 'CS-302', 'Core', 3);
+
+----------------------------------------------------------
+-- 5. INSERT INTO ENROLLMENT (Students → Courses)
+----------------------------------------------------------
+
+INSERT INTO ENROLLMENT (S_ID, C_ID)
+VALUES
+(1, 1),   -- Aiman → Database Systems
+(1, 2),   -- Aiman → Data Structures
+(2, 1),   -- Ali → Database Systems
+(2, 3);   -- Ali → Operating Systems
+
+----------------------------------------------------------
+-- 6. INSERT INTO ALLOCATION (Teachers → Courses)
+----------------------------------------------------------
+
+INSERT INTO ALLOCATION (T_ID, C_ID)
+VALUES
+(3, 1),  -- Fatima → Database Systems
+(3, 2),  -- Fatima → Data Structures
+(4, 3);  -- Ahmed → Operating Systems
+
+----------------------------------------------------------
+-- 7. INSERT INTO EXAM
+----------------------------------------------------------
+
+INSERT INTO EXAM (T_ID, C_ID, TITLE, TOTAL_QUESTIONS, E_DATE, START_TIME, END_TIME, E_TYPE)
+VALUES
+(3, 1, 'Midterm Exam', 10, '2025-01-20', '10:00 AM', '11:00 AM', 'DESC'),
+(3, 2, 'Quiz 1', 5, '2025-02-05', '09:00 AM', '09:30 AM', 'MCQ'),
+(4, 3, 'Final Exam', 12, '2025-01-25', '02:00 PM', '04:00 PM', 'MIX');
+
+----------------------------------------------------------
+-- 8. INSERT INTO EXAM_DESC_QUES
+----------------------------------------------------------
+
+INSERT INTO EXAM_DESC_QUES (E_ID, DESCRIPTION, MARKS)
+VALUES
+(1, 'Explain the concept of normalization in databases.', 5),
+(1, 'What is a transaction? Describe ACID properties.', 5),
+(3, 'Explain process synchronization in OS.', 6);
+
+----------------------------------------------------------
+-- 9. INSERT INTO EXAM_MCQ
+----------------------------------------------------------
+
+INSERT INTO EXAM_MCQ (E_ID, DESCRIPTION, MARKS)
+VALUES
+(2, 'Which data structure uses FIFO?', 1),
+(2, 'Stacks use which principle?', 1),
+(2, 'Which sorting algorithm is fastest on average?', 1);
+
+----------------------------------------------------------
+-- 10. INSERT INTO MCQ_OPTION
+----------------------------------------------------------
+
+INSERT INTO MCQ_OPTION (Q_ID, OP1, OP2, OP3, OP4, CORRECT_OP)
+VALUES
+(1, 'Queue', 'Stack', 'Tree', 'Graph', 'OP1'),
+(2, 'FIFO', 'LIFO', 'Random', 'Binary', 'OP2'),
+(3, 'Merge Sort', 'Bubble Sort', 'Selection Sort', 'Insertion Sort', 'OP1');
+
+----------------------------------------------------------
+-- 11. INSERT INTO DES_ANS
+----------------------------------------------------------
+
+INSERT INTO DES_ANS (Q_ID, ANSWERS)
+VALUES
+(1, 'Normalization reduces redundancy and improves data integrity.'),
+(2, 'ACID means Atomicity, Consistency, Isolation, Durability.'),
+(3, 'Synchronization ensures multiple processes do not access shared resources simultaneously.');
