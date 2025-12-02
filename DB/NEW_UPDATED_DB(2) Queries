@@ -312,3 +312,13 @@ JOIN CourseAllocation CA ON CA.ID = EX.A_ID
 JOIN CourseOffering CF ON CA.OfferingID = CF.ID
 JOIN COURSE C ON C.ID = CF.CourseID
 WHERE NAME = 'ALI KHAN'
+
+
+ select std.Name, sec.NAME, sec.DEPARTMENT, c.TITLE from student std 
+  JOIN Section sec on sec.id = std.section 
+  JOIN CourseEnrollment en on en.StudentID = std.StudentID 
+  JOIN CourseOffering cf on cf.ID = en.OfferingID 
+  JOIN CourseAllocation ca on c
+  JOIN course c on c.ID = cf.CourseID 
+
+  where std.name = 'ali khan' 
