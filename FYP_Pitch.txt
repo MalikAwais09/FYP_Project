@@ -1,0 +1,13 @@
+FYP Pitch (1:45 — Simple & Clear)
+Problem (Scenario — ~50 sec):
+Imagine a student sitting at home, taking an online exam. The teacher cannot see what the student is doing. The student can open new tabs, look at notes, use their phone, or even get help from someone else in the room. The teacher has no proof and no real way to stop it.
+Because of this, online exams become unfair. Honest students suffer, and teachers cannot trust the exam results.
+Now think about physical exams. Even in the exam hall, the invigilator cannot watch every student at the same time. Some students may cheat quietly, look at hidden notes, or receive help from someone using a phone. Again, there is no proper evidence.
+So the real problem is simple: there is no reliable way to monitor students properly in both online and physical exams, and teachers cannot confirm who is cheating, when it happened, and how to prove it later.
+
+Solution (~50 sec):
+Our solution is an AI-based exam proctoring system that works for both online and physical exams.
+For online exams, our system watches the student’s screen and catches suspicious activities like tab changing or switching windows. At the same time, a mobile camera monitors the student’s face and gestures. It checks if the student is the right person, if someone else is in the room, or if there is any helping material like books, notes, or gadgets.
+Whenever a suspicious activity happens, the system shows a warning and also saves the evidence with time and picture.
+For physical exams, our mobile app works like a smart invigilator. It scans students during the exam and detects unusual movements, hidden materials, or cheating attempts.
+In short, our project makes exams fair, secure, and fully monitored, giving teachers clear evidence and providing a trustworthy exam environment.
